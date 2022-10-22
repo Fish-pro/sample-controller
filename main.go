@@ -22,7 +22,7 @@ func main() {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	list, err := clientset.SamplecontrollerV1alpha1().Ats().List(context.TODO(), metav1.ListOptions{})
+	list, err := clientset.SamplecontrollerV1alpha1().Ats("default").List(context.TODO(), metav1.ListOptions{})
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -30,7 +30,7 @@ func main() {
 		fmt.Println(bar.Name)
 	}
 	factory := externalversions.NewSharedInformerFactory(clientset, 0)
-	factory.Crd().V1().Bars().Informer().AddEventHandler(cache.ResourceEventHandlerFuncs{
+	factory.Samplecontroller().V1alpha1().Ats().Informer().AddEventHandler(cache.ResourceEventHandlerFuncs{
 		AddFunc:    nil,
 		UpdateFunc: nil,
 		DeleteFunc: nil,
