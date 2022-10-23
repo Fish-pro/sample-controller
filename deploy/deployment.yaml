@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run: sample-controller
+  name: sample-controller
+  namespace: sample-system
+spec:
+  selector:
+    matchLabels:
+      run: sample-controller
+  template:
+    metadata:
+      labels:
+        run: sample-controller
+    spec:
+      serviceAccountName: sample-controller
+      containers:
+        - name: controller
+          command:
+            - /bin/controller
+          args:
+            - --namespace
+            - ccnp-system
+            - --configmapname
+            - resources-counter
+          image: fishpro3/sample-controller:v2.1.6
+          imagePullPolicy: Always
+          resources:
+            limits:
+              cpu: 2
+              memory: 4Gi
+            requests:
+              cpu: 500m
+              memory: 1Gi
